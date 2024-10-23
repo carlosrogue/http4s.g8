@@ -4,16 +4,6 @@
 
 ThisBuild / githubWorkflowBuild := Seq(
   WorkflowStep.Sbt(List("g8Test"), name = Some("Test generated template")),
-  WorkflowStep.Run(
-    List(
-      "cd target/sbt-test/http4s-g8/scripted",
-      "sbt assembly",
-      "gu install native-image",
-      "cat native-image-readme.md | grep 'native-image  -H*' | sh"
-    ),
-    cond = Some("startsWith(matrix.java, 'graalvm')"),
-    name = Some("Build native assembly")
-  )
 )
 
 val PrimaryOS = "ubuntu-latest"
@@ -22,7 +12,6 @@ ThisBuild / githubWorkflowOSes := Seq(PrimaryOS, MacOS)
 ThisBuild / githubWorkflowJavaVersions := Seq(
   JavaSpec.temurin("11"),
   JavaSpec.temurin("17"),
-  JavaSpec.graalvm("17")
 )
 ThisBuild / githubWorkflowPublishTargetBranches := Seq.empty
 
