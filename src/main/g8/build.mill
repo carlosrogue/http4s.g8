@@ -2,35 +2,37 @@
 import mill._, scalalib._
 
 object Deps {
-  val scalaVersion = "2.13.15"
+  val ScalaVersion = "2.13.15"
 
-  val http4sVersion = "0.23.30"
-  val munitVersion = "1.1.0"
-  val logbackVersion = "1.5.16"
-  val munitCatsEffectVersion = "2.0.0"
+  val Http4sVersion = "0.23.30"
+  val CirceVersion = "0.14.10"
+  val MunitVersion = "1.1.0"
+  val LogbackVersion = "1.5.16"
+  val MunitCatsEffectVersion = "2.0.0"
 
-  def http4s(module: String): Dep = ivy"org.http4s::http4s-\$module:\$http4sVersion"
+  def http4s(module: String): Dep = ivy"org.http4s::http4s-\$module:\$Http4sVersion"
 }
 
 object `package` extends RootModule with SbtModule {
   import Deps._
 
-  def scalaVersion = Deps.scalaVersion
+  def scalaVersion = ScalaVersion
 
   def ivyDeps = Agg(
     http4s("ember-server"),
     http4s("ember-client"),
     http4s("circe"),
     http4s("dsl"),
-    ivy"ch.qos.logback:logback-classic:\$logbackVersion",
+    ivy"io.circe::circe-generic:\$CirceVersion",
+    ivy"ch.qos.logback:logback-classic:\$LogbackVersion",
   )
 
   def mainClass: T[Option[String]] = Some("$organization$.$name;format="norm"$.Main")
 
   object test extends SbtTests with TestModule.Munit {
     def ivyDeps = Agg(
-      ivy"org.scalameta::munit:\$munitVersion",
-      ivy"org.typelevel::munit-cats-effect:\$munitCatsEffectVersion"
+      ivy"org.scalameta::munit:\$MunitVersion",
+      ivy"org.typelevel::munit-cats-effect:\$MunitCatsEffectVersion"
     )
   }
 }
