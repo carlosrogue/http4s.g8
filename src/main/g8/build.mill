@@ -3,7 +3,7 @@ package build
 import mill._, scalalib._
 
 object Deps {
-  val ScalaVersion = "3.3.3"
+  val ScalaVersion = "$scala_version$"
 
   val Http4sVersion = "0.23.30"
   val CirceVersion = "0.14.10"
