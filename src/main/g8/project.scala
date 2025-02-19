@@ -1,0 +1,7 @@
+// using scala "2.13.15"
+//> using dep "org.http4s::http4s-ember-server:0.23.30"
+//> using dep "org.http4s::http4s-ember-client:0.23.30"
+//> using dep "org.http4s::http4s-circe:0.23.30"
+//> using dep "org.http4s::http4s-dsl:0.23.30"
+//> using dep "io.circe::circe-generic:0.14.10"
+//> using dep "org.scalameta::munit:1.0.0"
