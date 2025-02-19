@@ -9,10 +9,6 @@ on:
 
 name: Launch Steward
 
-permisions:
-  contents: write
-  pull-requests: write
-
 jobs:
   scala-steward:
     runs-on: ubuntu-latest
@@ -24,6 +20,7 @@ jobs:
           distribution: 'temurin'
       - uses: scala-steward-org/scala-steward-action@2.75.0
         with:
+          github-token: ${{ secrets.SCALA_STEWARD_GITHUB_TOKEN }}
           mill-version: 0.12.8
           github-repository: carlosrogue/http4s.g8
           branches: 0.23-scala3-mill
