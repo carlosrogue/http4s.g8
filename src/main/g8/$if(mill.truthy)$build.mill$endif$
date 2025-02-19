@@ -1,6 +1,6 @@
 package build
 
-import mill._, scalalib._, publish._
+import mill._, scalalib._
 
 object Deps {
   val ScalaVersion = "2.13.15"
@@ -14,27 +14,12 @@ object Deps {
   def http4s(module: String): Dep = ivy"org.http4s::http4s-\$module:\$Http4sVersion"
 }
 
-object `package` extends RootModule with SbtModule with PublishModule {
+object `package` extends RootModule with SbtModule {
   import Deps._
 
   def scalaVersion = ScalaVersion
 
   def artifactName = "$name;format="norm"$"
-
-  def publishVersion = "0.0.1-SNAPSHOT"
-
-  def pomSettings = PomSettings(
-    description = artifactName(),
-    organization = "$organization$",
-    url = "https://http4s.org/v0.23/docs/quickstart.html#giter8-template",
-    licenses = Seq(License.`CC0-1.0`),
-    versionControl = VersionControl.github(owner="http4s",repo="http4s.g8"),
-    developers = Seq(
-      Developer("ChristopherDavenport", "Christopher Davenport", "https://github.com/ChristopherDavenport"),
-      Developer("rossabaker", "Ross A. Baker", "https://github.com/rossabaker"),
-      Developer("reardonj", "Justin Reardon", "https://github.com/reardonj"),
-    )
-  )
 
   def ivyDeps = Agg(
     http4s("ember-server"),
