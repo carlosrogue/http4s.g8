@@ -1,7 +1,7 @@
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0/5 * * * *'
+  # schedule:
+  #  - cron: '0/5 * * * *' # every 5th minute
 
 name: Launch Scala Steward
 
@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Launch Scala Steward
     steps:
-      - name: Launch Scala Steward
-        uses: scala-steward-org/scala-steward-action@2.75.0
+      - uses: scala-steward-org/scala-steward-action@2.75.0
         with:
+          mill-version: 0.12.8
           github-token: ${{ secrets.SCALA_STEWARD_GITHUB_TOKEN }}
           github-repository: carlosrogue/http4s.g8
           branches: 0.23-scala3-mill
