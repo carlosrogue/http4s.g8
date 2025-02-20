@@ -70,4 +70,5 @@ jobs:
         run: sbt githubWorkflowCheck
 
       - name: Test generated template
-        run: sbt '++ ${{ matrix.scala }}' g8Test
+        # ${{ matrix.scala }} to re add with mill 0.13.0
+        run: ./mill validate
