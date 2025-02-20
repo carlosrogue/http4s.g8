@@ -12,7 +12,7 @@ Generate an http4s service on the ember backend with Circe.
    - Scala 3: `sbt new http4s/http4s.g8 --branch 0.23-scala3`
    - Java 8: `sbt new http4s/http4s.g8 --branch 0.23-java8`
 3. `cd quickstart`
-4. `sbt run` or `mill run` or `scala-cli --scala 2.13.15 .`
+4. `sbt run` or `mill run` or `scala-cli --power .`
 5. `curl http://localhost:8080/hello/$USER`
 6. [Learn more](http://http4s.org/)
 
