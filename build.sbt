@@ -3,8 +3,10 @@
 // See http://www.foundweekends.org/giter8/testing.html#Using+the+Giter8Plugin for more details.
 
 ThisBuild / githubWorkflowBuild := Seq(
-  WorkflowStep.Sbt(List("g8Test"), name = Some("Test generated template")),
+  WorkflowStep.Sbt(List("g8TestMill"), name = Some("Test generated mill template")),
 )
+
+import scala.sys.process._
 
 val PrimaryOS = "ubuntu-latest"
 val MacOS = "macos-latest"
@@ -21,6 +23,8 @@ val MunitVersion = "1.1.0"
 val LogbackVersion = "1.5.16"
 val MunitCatsEffectVersion = "2.0.0"
 
+lazy val g8TestMill = taskKey[Unit]("Generates and validates g8 template")
+
 lazy val root = project
   .in(file("."))
   .settings(
@@ -35,6 +39,12 @@ lazy val root = project
       "org.typelevel"   %% "munit-cats-effect"   % MunitCatsEffectVersion % Test,
       "ch.qos.logback"  %  "logback-classic"     % LogbackVersion         % Runtime,
     ),
+    g8TestMill := {
+      val exitCode = ("./mill validate" !)
+      if (exitCode != 0) {
+        throw new RuntimeException("failed template verification")
+      }
+    },
     addSbtPlugin("org.typelevel" % "sbt-tpolecat" % "0.5.2"),
     addSbtPlugin("io.spray" % "sbt-revolver" % "0.10.0"),
     addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "2.3.1"),
