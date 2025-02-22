@@ -3,7 +3,7 @@
 // See http://www.foundweekends.org/giter8/testing.html#Using+the+Giter8Plugin for more details.
 
 ThisBuild / githubWorkflowBuild := Seq(
-  WorkflowStep.Sbt(List("g8Test"), name = Some("Test generated template")),
+  WorkflowStep.Sbt(List("g8TestMill"), name = Some("Test generated template")),
 )
 
 val PrimaryOS = "ubuntu-latest"
@@ -20,6 +20,8 @@ val CirceVersion = "0.14.10"
 val MunitVersion = "1.1.0"
 val LogbackVersion = "1.5.16"
 val MunitCatsEffectVersion = "2.0.0"
+
+val g8TestMill := taskKey[Unit]("Test generated template for Mill")
 
 lazy val root = project
   .in(file("."))
@@ -38,8 +40,9 @@ lazy val root = project
     addSbtPlugin("org.typelevel" % "sbt-tpolecat" % "0.5.2"),
     addSbtPlugin("io.spray" % "sbt-revolver" % "0.10.0"),
     addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "2.3.1"),
+    Test / g8TestMill := {},
     Test / test := {
-      val _ = (Test / g8Test).toTask("").value
+      val _ = (Test / g8TestMill).toTask("").value
     },
     scriptedLaunchOpts ++= List(
       "-Xms1024m",
