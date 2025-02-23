@@ -6,6 +6,12 @@ ThisBuild / githubWorkflowBuild := Seq(
   WorkflowStep.Sbt(List("g8TestMill"), name = Some("Test generated mill template")),
 )
 
+ThisBuild / githubWorkflowEnv := Map(
+  Map("GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}", 
+  Map("XDG_CACHE_HOME" -> "${{ github.workspace }}"
+)
+)
+
 import scala.sys.process._
 
 val PrimaryOS = "ubuntu-latest"
