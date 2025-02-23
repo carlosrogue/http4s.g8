@@ -39,7 +39,7 @@ lazy val root = project
       "org.typelevel"   %% "munit-cats-effect"   % MunitCatsEffectVersion % Test,
       "ch.qos.logback"  %  "logback-classic"     % LogbackVersion         % Runtime,
     ),
-    g8TestMill := {
+    Test / g8TestMill := {
       val exitCode = ("./mill validate" !)
       if (exitCode != 0) {
         throw new RuntimeException("failed template verification")
@@ -49,7 +49,7 @@ lazy val root = project
     addSbtPlugin("io.spray" % "sbt-revolver" % "0.10.0"),
     addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "2.3.1"),
     Test / test := {
-      val _ = (Test / g8Test).toTask("").value
+      val _ = (Test / g8TestMill).toTask("").value
     },
     scriptedLaunchOpts ++= List(
       "-Xms1024m",
