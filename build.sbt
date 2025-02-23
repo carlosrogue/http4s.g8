@@ -21,7 +21,7 @@ val MunitVersion = "1.1.0"
 val LogbackVersion = "1.5.16"
 val MunitCatsEffectVersion = "2.0.0"
 
-val g8TestMill := taskKey[Unit]("Test generated template for Mill")
+val g8TestMill = taskKey[Unit]("Test generated template for Mill")
 
 lazy val root = project
   .in(file("."))
