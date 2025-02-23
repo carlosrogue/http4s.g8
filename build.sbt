@@ -6,6 +6,11 @@ ThisBuild / githubWorkflowBuild := Seq(
   WorkflowStep.Sbt(List("g8TestMill"), name = Some("Test generated template")),
 )
 
+ThisBuild / githubWorkflowEnv := Map(
+  "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}", 
+  "XDG_CACHE_HOME" -> "${{ github.workspace }}"
+)
+
 val PrimaryOS = "ubuntu-latest"
 val MacOS = "macos-latest"
 ThisBuild / githubWorkflowOSes := Seq(PrimaryOS, MacOS)
@@ -40,7 +45,12 @@ lazy val root = project
     addSbtPlugin("org.typelevel" % "sbt-tpolecat" % "0.5.2"),
     addSbtPlugin("io.spray" % "sbt-revolver" % "0.10.0"),
     addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "2.3.1"),
-    Test / g8TestMill := {},
+    Test / g8TestMill := {
+      val exitCode = ("./mill validate" !)
+      if (exitCode != 0) {
+        throw new RuntimeException("failed template verification")
+      } 
+    },
     Test / test := {
       val _ = (Test / g8TestMill).toTask("").value
     },
