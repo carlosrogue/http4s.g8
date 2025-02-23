@@ -7,9 +7,8 @@ ThisBuild / githubWorkflowBuild := Seq(
 )
 
 ThisBuild / githubWorkflowEnv := Map(
-  Map("GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}", 
-  Map("XDG_CACHE_HOME" -> "${{ github.workspace }}"
-)
+  "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}", 
+  "XDG_CACHE_HOME" -> "${{ github.workspace }}"
 )
 
 import scala.sys.process._
